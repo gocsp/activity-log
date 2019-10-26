@@ -1,0 +1,13 @@
+{
+    "name": "pojome/ayro-activity-log",
+    "description": "Get aware of any activities that are taking place on your dashboard!",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Activity Log Team",
+            "email": "no@email.com"
+        }
+    ],
+    "require": {}
+}

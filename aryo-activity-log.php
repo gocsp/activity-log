@@ -96,7 +96,7 @@ final class AAL_Main {
 	 */
 	protected function __construct() {
 		global $wpdb;
-		
+
 		$this->ui            = new AAL_Admin_Ui();
 		$this->hooks         = new AAL_Hooks();
 		$this->settings      = new AAL_Settings();
@@ -108,7 +108,7 @@ final class AAL_Main {
 
 		// set up our DB name
 		$wpdb->activity_log = $wpdb->prefix . 'aryo_activity_log';
-		
+
 		add_action( 'plugins_loaded', array( &$this, 'load_textdomain' ) );
 	}
 

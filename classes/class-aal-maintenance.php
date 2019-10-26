@@ -19,6 +19,10 @@ class AAL_Maintenance {
 		} else {
 			self::_create_tables();
 		}
+
+		if ( ! wp_next_scheduled ( 'aal_delete_old_items' ) ) {
+            wp_schedule_event( time(), 'daily', 'aal_delete_old_items' );
+		}
 	}
 
 	public static function uninstall( $network_deactivating ) {
@@ -37,6 +41,8 @@ class AAL_Maintenance {
 		} else {
 			self::_remove_tables();
 		}
+
+		wp_clear_scheduled_hook( 'aal_delete_old_items' );
 	}
 
 	public static function mu_new_blog_installer( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
@@ -82,7 +88,7 @@ class AAL_Maintenance {
 		$admin_role = get_role( 'administrator' );
 		if ( $admin_role instanceof WP_Role && ! $admin_role->has_cap( 'view_all_aryo_activity_log' ) )
 			$admin_role->add_cap( 'view_all_aryo_activity_log' );
-		
+
 		update_option( 'activity_log_db_version', '1.0' );
 	}
 
