@@ -116,3 +116,5 @@ register_uninstall_hook( ACTIVITY_LOG_BASE, array( 'AAL_Maintenance', 'uninstall
 add_action( 'wpmu_new_blog', array( 'AAL_Maintenance', 'mu_new_blog_installer' ), 10, 6 );
 // MU Uninstall for delete blog.
 add_action( 'delete_blog', array( 'AAL_Maintenance', 'mu_delete_blog' ), 10, 2 );
+
+add_action( 'aal_delete_old_items', 'aal_delete_old_items', 10 );

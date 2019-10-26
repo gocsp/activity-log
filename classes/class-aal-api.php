@@ -8,7 +8,7 @@ class AAL_API {
 	 *
 	 * @return void
 	 */
-	protected function _delete_old_items() {
+	public function delete_old_items() {
 		global $wpdb;
 
 		$logs_lifespan = absint( AAL_Main::instance()->settings->get_option( 'logs_lifespan' ) );
@@ -162,5 +162,5 @@ function aal_insert_log( $args = array() ) {
 }
 
 function aal_delete_old_items( ) {
-	AAL_Main::instance()->api->_delete_old_items( );
+	AAL_Main::instance()->api->delete_old_items( );
 }
