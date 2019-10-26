@@ -13,16 +13,19 @@ class AAL_Maintenance {
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
 				self::_create_tables();
+				if ( ! wp_next_scheduled ( 'aal_delete_old_items' ) ) {
+					wp_schedule_event( time(), 'daily', 'aal_delete_old_items' );
+				}
 			}
 
 			switch_to_blog( $old_blog_id );
 		} else {
 			self::_create_tables();
+			if ( ! wp_next_scheduled ( 'aal_delete_old_items' ) ) {
+				wp_schedule_event( time(), 'daily', 'aal_delete_old_items' );
+			}
 		}
 
-		if ( ! wp_next_scheduled ( 'aal_delete_old_items' ) ) {
-            wp_schedule_event( time(), 'daily', 'aal_delete_old_items' );
-		}
 	}
 
 	public static function uninstall( $network_deactivating ) {
@@ -35,14 +38,15 @@ class AAL_Maintenance {
 			foreach ( $blog_ids as $blog_id ) {
 				switch_to_blog( $blog_id );
 				self::_remove_tables();
+				wp_clear_scheduled_hook( 'aal_delete_old_items' );
 			}
 
 			switch_to_blog( $old_blog_id );
 		} else {
 			self::_remove_tables();
+			wp_clear_scheduled_hook( 'aal_delete_old_items' );
 		}
 
-		wp_clear_scheduled_hook( 'aal_delete_old_items' );
 	}
 
 	public static function mu_new_blog_installer( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
